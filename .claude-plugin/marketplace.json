@@ -1,0 +1,13 @@
+{
+  "name": "place-du-marche",
+  "owner": {
+    "name": "Alexi Desvignes-Nouvel"
+  },
+  "plugins": [
+    {
+      "name": "dev-tools",
+      "source": "./plugins/dev-tools",
+      "description": "General-purpose developer tools: GitLab/GitHub MCP servers and Conventional Commits enforcement"
+    }
+  ]
+}

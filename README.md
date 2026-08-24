@@ -1,6 +1,26 @@
 # Place du Marché
 
+Marketplace of Claude Code plugins.
 
+## Installation
+
+In Claude Code:
+
+```
+/plugin marketplace add https://gitlab.autonhomeserver.com/ai/claude-code/place-du-marche.git
+/plugin install dev-tools@place-du-marche
+```
+
+## Plugins
+
+| Plugin | Description |
+| --- | --- |
+| [dev-tools](plugins/dev-tools) | GitLab/GitHub MCP servers and Conventional Commits enforcement |
+
+## Adding a plugin
+
+1. Create `plugins/<plugin-name>/.claude-plugin/plugin.json` (name, description, version).
+2. Add the plugin to `.claude-plugin/marketplace.json` (`plugins` array).
 
 ## Getting started
 
