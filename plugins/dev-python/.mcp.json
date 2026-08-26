@@ -1,0 +1,11 @@
+{
+  "mcpServers": {
+    "rope-refactor": {
+      "type": "stdio",
+      "command": "uvx",
+      "args": [
+        "rope-mcp-server"
+      ]
+    }
+  }
+}
