@@ -11,14 +11,23 @@ library — the same refactoring engine behind PyCharm's and VS Code's Python
 refactor commands — and performs the edit plus every import/reference update
 project-wide in one call.
 
-**Default to these tools for any move/rename/extract/inline, full stop.**
-Not a fallback for when `Read`+`Edit` seems tedious — the starting point.
+**Rule: for any move/rename/extract/inline, call the `mcp__rope-refactor__*`
+tool. Do not use `Read`+`Edit` for this, even if it looks faster by hand.**
 This still applies when the move/rename is embedded inside a bigger request
 (e.g. "move X into its own file and add a new endpoint for it") — do the
 structural part with `move_symbol`/`rename_symbol` first, then build the rest
 on top, rather than reading everything by hand because the request wasn't
 *only* a refactor. A hand-done move on anything past a trivial single-file
-case reliably misses an import site rope would have caught automatically.
+case reliably misses an import site rope would have caught automatically —
+imports buried inside a multi-name `from x import (a, b, c)` line are the
+easiest to miss by eye and the easiest for rope to catch.
+
+**Moving more than one symbol? Move leaf dependencies first.** If B's
+definition references A (e.g. `ItemsPublic` has a field typed `list[ItemPublic]`),
+call `move_symbol` for A before B. Moving B first leaves A undefined in the
+destination file until A's move lands, breaking the import in between calls.
+When in order is unclear, call `list_symbols` and move in the order symbols
+reference each other, innermost first.
 
 ## When to reach for it
 
