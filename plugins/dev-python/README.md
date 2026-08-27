@@ -109,11 +109,11 @@ Current scores on the `tasks/refactor/*` suite of the
 [benchmark repository](https://github.com/AlexiDN/benchmark) (10 runs per
 condition, Haiku model) — will drift as the plugin and the benchmark evolve:
 
-| task | baseline pass | treatment pass | mcp used | skill used | cost (base → treat) | duration (base → treat) |
-| --- | --- | --- | --- | --- | --- | --- |
-| move-class-small | 100% | 100% | 90% | 60% | $0.057 → $0.075 | 39.6s → 52.9s |
-| lint-cleanup | 100% | 100% | 0% | 0% | $0.021 → $0.030 | 14.6s → 22.8s |
-| rename-with-tests | 90% | 100% | 100% | 50% | $0.046 → $0.032 | 33.1s → 25.9s |
+| task | baseline pass | treatment pass | mcp used | skill used | tokens in (base → treat) | tokens out (base → treat) | cache read (base → treat) | duration (base → treat) |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| move-class-small | 100% | 100% | 90% | 60% | 105 → 137 (+30%) | 3193 → 3844 (+20%) | 276492 → 383945 (+39%) | 39.6s → 52.9s (+34%) |
+| lint-cleanup | 100% | 100% | 0% | 0% | 49 → 66 (+35%) | 920 → 1309 (+42%) | 115816 → 160594 (+39%) | 14.6s → 22.8s (+56%) |
+| rename-with-tests | 90% | 100% | 100% | 50% | 75 → 63 (-16%) | 2925 → 1681 (-43%) | 195616 → 152747 (-22%) | 33.1s → 25.9s (-22%) |
 
 `mcp used`/`skill used` show how often the agent actually reached for the
 plugin's tools rather than hand-editing (`lint-cleanup`'s work happens in
