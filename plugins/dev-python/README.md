@@ -12,7 +12,7 @@ call site just to copy text around by hand.
 ## Install
 
 ```
-/plugin marketplace add https://gitlab.autonhomeserver.com/ai/claude-code/place-du-marche.git
+/plugin marketplace add https://github.com/AlexiDN/place-du-marche.git
 /plugin install dev-python@place-du-marche
 ```
 

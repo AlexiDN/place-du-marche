@@ -8,7 +8,7 @@ servers, plus a hook that enforces
 ## Install
 
 ```
-/plugin marketplace add https://gitlab.autonhomeserver.com/ai/claude-code/place-du-marche.git
+/plugin marketplace add https://github.com/AlexiDN/place-du-marche.git
 /plugin install dev-tools@place-du-marche
 ```
 
