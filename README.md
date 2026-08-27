@@ -1,6 +1,17 @@
 # Place du Marché
 
-A Claude Code plugin marketplace.
+<div align="center">
+  <h2>High-quality Claude Code plugins with French flair.</h2>
+  <img src="images/baguette.gif" width="400" height="400" alt="Baguette" />
+</div>
+
+## Why Place du Marché?
+
+Quality-focused Claude Code plugins, tested and benchmarked. No hype — just verified improvements to your workflow.
+
+## Quality Assurance
+
+All plugins in this marketplace are AI-assisted and thoroughly tested. Every plugin is benchmarked against our test suite to verify the promised benefits. Benchmark code is available in our [benchmark repository](https://github.com/AlexiDN/benchmark) — results will be published here soon.
 
 ## Installation
 
@@ -13,12 +24,10 @@ In Claude Code:
 
 ## Plugins
 
-| Plugin | Description |
-| --- | --- |
-| [dev-tools](plugins/dev-tools) | GitLab, GitHub, and Context7 MCP servers, plus a Conventional Commits enforcement hook |
-| [dev-python](plugins/dev-python) | Python refactoring via rope (move/rename/extract with automatic import updates), blocking ruff/type-check `Stop` hooks, and a python-idioms skill |
+- **[dev-tools](plugins/dev-tools)** — Generic development utilities (MCP servers, Git hooks, conventions)
+- **[dev-python](plugins/dev-python)** — Python-focused development tools (refactoring, linting, idioms)
 
-See each plugin's README for install commands, dependencies, and details.
+See each plugin's README for installation, dependencies, and full documentation.
 
 ## Adding a plugin
 
