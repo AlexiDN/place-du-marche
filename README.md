@@ -16,6 +16,7 @@ In Claude Code:
 | Plugin | Description |
 | --- | --- |
 | [dev-tools](plugins/dev-tools) | GitLab/GitHub MCP servers and Conventional Commits enforcement |
+| [dev-python](plugins/dev-python) | Project-wide Python refactoring via rope: move/rename/extract with automatic import updates |
 
 ## Adding a plugin
 

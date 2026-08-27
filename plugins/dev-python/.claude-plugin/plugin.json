@@ -1,5 +1,5 @@
 {
   "name": "dev-python",
-  "description": "Project-wide Python refactoring (move/rename/extract with automatic import updates) via the rope-mcp-server MCP, plus a ruff Stop hook and a test-impact hint hook",
-  "version": "0.2.0"
+  "description": "Project-wide Python refactoring (move/rename/extract with automatic import updates) via the rope-mcp-server MCP, blocking ruff and type-check Stop hooks (bypass via DEV_PYTHON_NO_GATE=1), a test-impact hint hook, and a python-idioms design-rules skill",
+  "version": "0.5.0"
 }

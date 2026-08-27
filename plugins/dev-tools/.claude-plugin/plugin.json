@@ -1,5 +1,5 @@
 {
   "name": "dev-tools",
-  "description": "General-purpose developer tools: GitLab/GitHub MCP servers and Conventional Commits enforcement",
-  "version": "0.1.0"
+  "description": "General-purpose developer tools: GitLab/GitHub/Context7 MCP servers and Conventional Commits enforcement",
+  "version": "0.2.0"
 }

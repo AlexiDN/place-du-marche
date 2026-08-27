@@ -7,7 +7,12 @@
     {
       "name": "dev-tools",
       "source": "./plugins/dev-tools",
-      "description": "General-purpose developer tools: GitLab/GitHub MCP servers and Conventional Commits enforcement"
+      "description": "General-purpose developer tools: GitLab/GitHub/Context7 MCP servers and Conventional Commits enforcement"
+    },
+    {
+      "name": "dev-python",
+      "source": "./plugins/dev-python",
+      "description": "Project-wide Python refactoring (move/rename/extract with automatic import updates) via the rope-mcp-server MCP, blocking ruff/type-check Stop hooks, and a python-idioms design-rules skill"
     }
   ]
 }

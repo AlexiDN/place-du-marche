@@ -22,6 +22,7 @@ call site just to copy text around by hand.
 | --- | --- | --- | --- |
 | [`uv`](https://docs.astral.sh/uv/) (`uvx` on `PATH`) | **Required** | Runs `rope-mcp-server` (`uvx rope-mcp-server`), no manual install needed. | The `rope-refactor` MCP server fails to start — the plugin's core functionality (move/rename/extract) is unavailable. |
 | [`ruff`](https://docs.astral.sh/ruff/) on `PATH` | Optional | The `ruff-gate.sh` `Stop` hook: auto-fix + format + report remaining lint issues. | The hook is a no-op (fails open, no error, no message) — it never installs or requires ruff itself. Bring your own if you want this hook to do anything. |
+| [`pyrefly`](https://pyrefly.org/)/[`pyright`](https://microsoft.github.io/pyright/)/[`mypy`](https://mypy-lang.org/) on `PATH` | Optional | The `type-check-gate.sh` `Stop` hook: runs whichever one is found first (in that order) and reports type errors. | No-op if none are installed — never installs or requires any of them. |
 | `jq` on `PATH` | **Required** | Parses hook input/builds hook output JSON in both hooks. | Hooks error out instead of running (the MCP server and skill still work). |
 
 No `npx`/Docker/other runtime is used by this plugin.
@@ -58,16 +59,35 @@ different problem (semantic exploration vs. mechanical refactor).
 - **Skill** (`rope-refactor`): maps refactor-shaped tasks (move, rename,
   extract, inline, split-into-package) to the matching MCP tool instead of
   manual `Read`+`Edit`.
+- **Skill** (`python-idioms`): design/architecture rules that ruff and a
+  type checker can't enforce mechanically (mutable default args, overly
+  broad exceptions, god objects/functions, dataclasses vs. raw dict/tuple
+  state, context managers for cleanup, `Protocol` vs. `ABC`). Also points
+  at the `dev-tools` plugin's Context7 MCP for verifying an external
+  library's current API instead of guessing from training data.
 - **Hook** (`hooks/ruff-gate.sh`, `Stop`): once the agent finishes, runs
-  `ruff check --fix` and `ruff format` over the whole project, then reports
-  any remaining (non-auto-fixable) issues back as a message — informational
-  only, never blocks. Fails open: if `ruff` is missing, or check/format
-  errors out for any reason (bad config, no `pyproject.toml`, version
-  mismatch), it exits silently rather than surfacing a spurious error.
+  `ruff check --fix` and `ruff format` over the whole project. If issues
+  remain that ruff couldn't auto-fix, it **blocks** `Stop` (exit 2) so
+  Claude has to address them before the turn ends. Fails open: if `ruff` is
+  missing, or check/format errors out for any reason (bad config, no
+  `pyproject.toml`, version mismatch), it exits silently rather than
+  surfacing a spurious error.
 - **Hook** (`hooks/test-impact.sh`, `PostToolUse` on rope's
   `move_symbol`/`rename_symbol`): greps `test_*.py`/`*_test.py` files for the
   affected symbol's name and lists which ones likely need a re-run. A cheap
   text-match heuristic, not a real reference graph.
+- **Hook** (`hooks/type-check-gate.sh`, `Stop`): runs `pyrefly`, `pyright`,
+  or `mypy` — first one found on `PATH`, in that order — over the project.
+  Same fail-open shape as `ruff-gate.sh` (skips silently if none of the
+  three are installed), and **blocks** `Stop` the same way if the tool
+  reports errors.
+
+### Bypassing the Stop gates
+
+Set `DEV_PYTHON_NO_GATE=1` in the environment to turn both `ruff-gate.sh`
+and `type-check-gate.sh` back into informational-only hooks (message
+reported via `systemMessage`, `Stop` never blocked) — for when you want to
+stop anyway with known issues outstanding.
 
 ## Known limitations
 
@@ -90,6 +110,11 @@ different problem (semantic exploration vs. mechanical refactor).
   rather than "move/rename".
 - **Non-Python language parity**: rope is Python-only; other languages would
   need a different refactor engine entirely.
-- **mypy/pyright type-check gate**: same shape as `ruff-gate.sh` but for
-  type errors — not added since ruff already covers lint+format and adding
-  a second tool dependency wasn't asked for.
+- **LSP-backed type checking**: deliberately not adopted — `type-check-gate.sh`
+  already runs pyrefly/pyright/mypy as a stateless CLI check on `Stop`, which
+  matches what pyrefly itself documents as the recommended agent-integration
+  pattern. A long-running LSP process adds stateful overhead (memory,
+  per-connection cost, config-propagation issues seen in other Claude Code
+  LSP plugins) for a navigation use case (cursor-based go-to-def/hover) this
+  plugin doesn't need — rope already covers the structural-edit case an LSP
+  would otherwise be used for here.
