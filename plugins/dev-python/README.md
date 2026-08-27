@@ -109,11 +109,19 @@ Current scores on the `tasks/refactor/*` suite of the
 [benchmark repository](https://github.com/AlexiDN/benchmark) (10 runs per
 condition, Haiku model) — will drift as the plugin and the benchmark evolve:
 
-| task | baseline pass | treatment pass |
-| --- | --- | --- |
-| move-class-small | 100% | 100% |
-| lint-cleanup | 100% | 100% |
-| rename-with-tests | 90% | 100% |
+| task | baseline pass | treatment pass | mcp used | skill used |
+| --- | --- | --- | --- | --- |
+| move-class-small | 100% | 100% | 90% | 60% |
+| lint-cleanup | 100% | 100% | 0% | 0% |
+| rename-with-tests | 90% | 100% | 100% | 50% |
+
+`mcp used`/`skill used` show how often the agent actually reached for the
+plugin's tools rather than hand-editing. `lint-cleanup`'s 0%/0% doesn't mean
+the plugin did nothing there — it's the `ruff-gate.sh` `Stop` hook doing the
+work instead, silently, without the agent ever calling an MCP tool or the
+skill. `rename-with-tests` is the clearest signal: baseline's failure is
+exactly the kind of missed-reference mistake `rename_symbol` structurally
+can't make.
 
 ## Ideas not included (yet)
 
