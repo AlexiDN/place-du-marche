@@ -109,19 +109,15 @@ Current scores on the `tasks/refactor/*` suite of the
 [benchmark repository](https://github.com/AlexiDN/benchmark) (10 runs per
 condition, Haiku model) — will drift as the plugin and the benchmark evolve:
 
-| task | baseline pass | treatment pass | mcp used | skill used |
-| --- | --- | --- | --- | --- |
-| move-class-small | 100% | 100% | 90% | 60% |
-| lint-cleanup | 100% | 100% | 0% | 0% |
-| rename-with-tests | 90% | 100% | 100% | 50% |
+| task | baseline pass | treatment pass | mcp used | skill used | cost (base → treat) | duration (base → treat) |
+| --- | --- | --- | --- | --- | --- | --- |
+| move-class-small | 100% | 100% | 90% | 60% | $0.057 → $0.075 | 39.6s → 52.9s |
+| lint-cleanup | 100% | 100% | 0% | 0% | $0.021 → $0.030 | 14.6s → 22.8s |
+| rename-with-tests | 90% | 100% | 100% | 50% | $0.046 → $0.032 | 33.1s → 25.9s |
 
 `mcp used`/`skill used` show how often the agent actually reached for the
-plugin's tools rather than hand-editing. `lint-cleanup`'s 0%/0% doesn't mean
-the plugin did nothing there — it's the `ruff-gate.sh` `Stop` hook doing the
-work instead, silently, without the agent ever calling an MCP tool or the
-skill. `rename-with-tests` is the clearest signal: baseline's failure is
-exactly the kind of missed-reference mistake `rename_symbol` structurally
-can't make.
+plugin's tools rather than hand-editing (`lint-cleanup`'s work happens in
+the `ruff-gate.sh` `Stop` hook instead).
 
 ## Ideas not included (yet)
 
