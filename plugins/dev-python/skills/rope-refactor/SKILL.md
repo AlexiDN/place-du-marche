@@ -54,6 +54,11 @@ only reports back which files changed, not their full contents.
 3. Check the tool's `changed_files` (and `warning_string_references`, for
    moves — rope can't see string-based references like `mock.patch("...")`
    or dynamic `importlib` paths, so those need a manual follow-up check).
+   Then `Grep` the old name across the whole project as a final check —
+   rope can miss a reference it doesn't recognize (e.g. an aliased import
+   like `from x import Foo as F`, which keeps using the old module path
+   under a local alias). A file absent from `changed_files` is not proof
+   it needed no change.
 4. For anything that isn't a structural move/rename/extract/inline (a
    one-line tweak inside a function, a non-Python file), just use plain
    `Read`/`Edit` — rope only helps with the operations it's built for.
