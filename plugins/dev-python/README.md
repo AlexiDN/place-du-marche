@@ -103,6 +103,18 @@ stop anyway with known issues outstanding.
   than silently missing them.
 - Python only (rope's own limitation).
 
+## Benchmark
+
+Current scores on the `tasks/refactor/*` suite of the
+[benchmark repository](https://github.com/AlexiDN/benchmark) (10 runs per
+condition, Haiku model) — will drift as the plugin and the benchmark evolve:
+
+| task | baseline pass | treatment pass |
+| --- | --- | --- |
+| move-class-small | 100% | 100% |
+| lint-cleanup | 100% | 100% |
+| rename-with-tests | 90% | 100% |
+
 ## Ideas not included (yet)
 
 - **Semantic search/exploration layer**: revisit Serena (or a plain LSP MCP)
