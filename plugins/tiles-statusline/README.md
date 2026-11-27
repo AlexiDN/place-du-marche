@@ -11,7 +11,7 @@ A colored, self-updating status line for Claude Code, under the prompt.
 - **Left**: the model, the context window fill, the 5-hour session and weekly rate limits (with the time left
   before each resets) and a prompt cache countdown.
 - **Center, live**: the MCP call running right now, and the skills used in the current turn.
-- **Right**: the plugins enabled in your settings and the MCP servers whose tools are loaded in the session.
+- **Right**: the plugins enabled in your settings and the MCP servers whose tools are loaded in the session (servers still waiting for a sign-in are left out).
 
 Every gauge changes color as it gets worse: green, yellow, orange, then red. The cache timer turns red as it nears
 expiry and shows `cache cold` once it expired, after a `/compact` or after a model switch (the next request rebuilds
@@ -55,6 +55,7 @@ Everything is set from `/config`, under the `Status line …` entries; a change 
 | Status line reset countdowns | `↻` time before the session and week limits reset | on |
 | Status line spacing | blank lines above the line and between its rows | `1` |
 | Status line quiet right tiles | dimmer plugin and MCP tiles, so the gauges stand out | on |
+| Status line built-in MCP servers | show the MCP servers that come with Claude Code and claude.ai (`ide`, `easel`, Claude Docs) in the MCP tile | on |
 | Status line left / center / right segments | which segments each zone shows, in order: `model context session week cache` / `active` / `plugins mcp` | all |
 | Status line cache lifetime (s) | `3600` (1 h) or `300` (5 min) | `3600` |
 

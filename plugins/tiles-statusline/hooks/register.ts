@@ -8,7 +8,7 @@ const ENV_NAMES: Record<string, string> = {
   style: 'TSL_STYLE', bar: 'TSL_BAR', barWidth: 'TSL_BAR_WIDTH', icons: 'TSL_ICONS',
   showResets: 'TSL_SHOW_RESETS', spacing: 'TSL_SPACING', softRight: 'TSL_SOFT_RIGHT',
   segments: 'TSL_SEGMENTS', segmentsCenter: 'TSL_SEGMENTS_CENTER', segmentsRight: 'TSL_SEGMENTS_RIGHT',
-  cacheTtl: 'TSL_CACHE_TTL',
+  cacheTtl: 'TSL_CACHE_TTL', showBuiltinMcp: 'TSL_SHOW_BUILTIN_MCP',
 }
 
 let optionEnv: Record<string, string> = {}
