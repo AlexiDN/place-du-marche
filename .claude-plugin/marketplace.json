@@ -13,6 +13,11 @@
       "name": "dev-python",
       "source": "./plugins/dev-python",
       "description": "Project-wide Python refactoring (move/rename/extract with automatic import updates) via the rope-mcp-server MCP, blocking ruff/type-check Stop hooks, and a python-idioms design-rules skill"
+    },
+    {
+      "name": "tiles-statusline",
+      "source": "./plugins/tiles-statusline",
+      "description": "Colored status line: model, context, 5h session and week limits, prompt cache timer, live MCP/skill activity, loaded plugins and MCP servers. Configurable from /config."
     }
   ]
 }

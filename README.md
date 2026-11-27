@@ -26,6 +26,7 @@ In Claude Code:
 
 - **[dev-tools](plugins/dev-tools)** — Generic development utilities (MCP servers, Git hooks, conventions)
 - **[dev-python](plugins/dev-python)** — Python-focused development tools (refactoring, linting, idioms)
+- **[tiles-statusline](plugins/tiles-statusline)** — Colored live status line: context, rate limits, cache timer, MCP/skill activity
 
 See each plugin's README for installation, dependencies, and full documentation.
 
