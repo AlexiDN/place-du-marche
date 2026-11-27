@@ -1,0 +1,84 @@
+{
+  "name": "tiles-statusline",
+  "version": "0.1.0",
+  "description": "Colored status line tiles: model, context, 5h session, week limit, prompt cache timer, live MCP/skill activity, loaded plugins and MCP servers.",
+  "userConfig": {
+    "style": {
+      "type": "string",
+      "title": "Status line style",
+      "description": "powerline: rounded colored tiles (needs a Nerd Font); plain: colored text",
+      "options": [
+        "powerline",
+        "plain"
+      ],
+      "default": "plain"
+    },
+    "bar": {
+      "type": "string",
+      "title": "Status line bars",
+      "description": "Gauge bars next to the percentages",
+      "options": [
+        "none",
+        "smooth",
+        "blocks",
+        "dots"
+      ],
+      "default": "smooth"
+    },
+    "barWidth": {
+      "type": "number",
+      "title": "Status line bar width",
+      "description": "Cells per bar",
+      "default": 10
+    },
+    "icons": {
+      "type": "boolean",
+      "title": "Status line emoji icons",
+      "description": "Emoji in front of each segment",
+      "default": true
+    },
+    "showResets": {
+      "type": "boolean",
+      "title": "Status line reset countdowns",
+      "description": "Time left before the session and week limits reset",
+      "default": true
+    },
+    "spacing": {
+      "type": "number",
+      "title": "Status line spacing",
+      "description": "Blank lines above the status line and between its rows",
+      "default": 1
+    },
+    "softRight": {
+      "type": "boolean",
+      "title": "Status line quiet right tiles",
+      "description": "Dimmer plugin and MCP tiles so the gauges stand out",
+      "default": true
+    },
+    "segments": {
+      "type": "string",
+      "title": "Status line left segments",
+      "description": "In order, among: model context session week cache",
+      "default": "model context session week cache"
+    },
+    "segmentsCenter": {
+      "type": "string",
+      "title": "Status line center segments",
+      "description": "active: running MCP call, skill used in the current turn",
+      "default": "active"
+    },
+    "segmentsRight": {
+      "type": "string",
+      "title": "Status line right segments",
+      "description": "Among: plugins mcp",
+      "default": "plugins mcp"
+    },
+    "cacheTtl": {
+      "type": "number",
+      "title": "Status line cache lifetime (s)",
+      "description": "Fallback when Claude Code does not report the cache expiry: 3600 (1 h) or 300 (5 min)",
+      "default": 3600
+    }
+  },
+  "license": "MIT"
+}
