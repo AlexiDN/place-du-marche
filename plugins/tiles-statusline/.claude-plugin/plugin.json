@@ -1,6 +1,6 @@
 {
   "name": "tiles-statusline",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Colored status line tiles: model, context, 5h session, week limit, prompt cache timer, live MCP/skill activity, loaded plugins and MCP servers.",
   "userConfig": {
     "style": {
@@ -72,6 +72,12 @@
       "title": "Status line right segments",
       "description": "Among: plugins mcp",
       "default": "plugins mcp"
+    },
+    "showBuiltinMcp": {
+      "type": "boolean",
+      "title": "Status line built-in MCP servers",
+      "description": "Show the MCP servers that come with Claude Code and claude.ai (ide, easel, Claude Docs) in the MCP tile",
+      "default": true
     },
     "cacheTtl": {
       "type": "number",

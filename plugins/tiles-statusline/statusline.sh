@@ -7,7 +7,7 @@
 # Options come from the mod's /config entries, passed as TSL_* environment variables.
 STYLE=${TSL_STYLE:-plain} BAR=${TSL_BAR:-smooth} BAR_WIDTH=${TSL_BAR_WIDTH:-10}
 SHOW_RESETS=${TSL_SHOW_RESETS:-true} CACHE_TTL=${TSL_CACHE_TTL:-3600} ICONS=${TSL_ICONS:-true}
-SPACING=${TSL_SPACING:-1} SOFT_RIGHT=${TSL_SOFT_RIGHT:-true}
+SPACING=${TSL_SPACING:-1} SOFT_RIGHT=${TSL_SOFT_RIGHT:-true} SHOW_BUILTIN_MCP=${TSL_SHOW_BUILTIN_MCP:-true}
 SEGMENTS=${TSL_SEGMENTS-"model context session week cache"}
 SEGMENTS_CENTER=${TSL_SEGMENTS_CENTER-"active"} SEGMENTS_RIGHT=${TSL_SEGMENTS_RIGHT-"plugins mcp"}
 
@@ -131,14 +131,19 @@ if [[ -f $transcript ]]; then
   fi
 fi
 
-# MCP servers whose tools are loaded (from the deferred tool records of this session)
+# MCP servers whose tools are loaded (from the deferred tool records of this session), minus the ones
+# that only expose authenticate/complete_authentication: they still need a sign-in, so they are unusable
 mcp_servers() {
   [[ -f $transcript ]] || return
-  grep -a '"deferred_tools_delta"' "$transcript" | jq -rs '
+  grep -a '"deferred_tools_delta"' "$transcript" | jq -rs --arg builtin "$SHOW_BUILTIN_MCP" '
     reduce (.[] | .attachment) as $d ({}; reduce (($d.addedNames // []) + ($d.surfacedNames // []))[] as $n (.; .[$n] = true)
                                           | reduce ($d.removedNames // [])[] as $n (.; del(.[$n])))
-    | keys | map(select(startswith("mcp__")) | ltrimstr("mcp__") | split("__")[0] | sub("^claude_ai_"; "") | gsub("_"; " "))
-    | unique | join(" · ")' 2>/dev/null
+    | keys | map(select(startswith("mcp__")) | ltrimstr("mcp__") | split("__") | {s: .[0], t: .[1]})
+    # shortcut: hard-coded list of the servers Claude Code / claude.ai ship, extend it when a new one shows up
+    | map(select($builtin == "true" or (.s | IN("ide", "easel", "claude_ai_Claude_Docs") | not)))
+    | group_by(.s) | map(select(any(.[]; .t != "authenticate" and .t != "complete_authentication")) | .[0].s
+                         | sub("^claude_ai_"; "") | gsub("_"; " "))
+    | join(" · ")' 2>/dev/null
 }
 
 # Enabled plugins (user, project and local settings)
